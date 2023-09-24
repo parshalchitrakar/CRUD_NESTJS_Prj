@@ -1,3 +1,4 @@
+import { th } from "@faker-js/faker";
 import { MessageRepository } from "./messages.repository";
 import { Injectable } from "@nestjs/common";
 
@@ -17,6 +18,10 @@ export class MessageService{
     }
     remove(id: string){
         return this.messageRepo.remove(id)
+    }
+    editSpecificContent(id: string, content: string){
+        return this.messageRepo.editSpecificContent(id, content)
+
     }
 
 }

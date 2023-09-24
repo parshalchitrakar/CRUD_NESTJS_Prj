@@ -1,4 +1,4 @@
-import { Controller, Get, Post,Delete, Body, Param, NotFoundException } from '@nestjs/common';
+import { Controller, Get, Post,Delete, Patch, Body, Param, NotFoundException } from '@nestjs/common';
 import { createMessageDto } from './dtos/createmessage.dto';
 import { MessageService } from './messages.service';
 
@@ -37,9 +37,18 @@ export class MessagesController {
         }
         else{
             return this.messageService.remove(id)
-        }
+        }   
+    }
 
-        
+    @Patch ("/:id")
+    async editSpecificContent(@Param("id") id: string, @Body() body: createMessageDto){
+        let message =  await this.messageService.findOne(id)
+        if (!message){
+            throw new NotFoundException("Message not found")
+        }
+        else{
+            return this.messageService.editSpecificContent(id,body.content)
+        }   
     }
     
 

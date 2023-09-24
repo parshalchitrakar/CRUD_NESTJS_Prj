@@ -1,5 +1,5 @@
 import { readFile, writeFile } from "fs/promises"; //read and write to the database.
-import { Delete, Injectable } from "@nestjs/common";
+import { Injectable } from "@nestjs/common";
 
 @Injectable()
 export class MessageRepository{
@@ -42,6 +42,18 @@ export class MessageRepository{
             console.log ("Error while inserting message.")
         })
         
+
+    }
+    async editSpecificContent(id: string, content: string){
+        let contents = await readFile("message.json", "utf-8")
+        let messages = JSON.parse(contents)
+        messages[id] = {id,content}
+        await (writeFile("message.json",JSON.stringify(messages)))
+        .then(()=> {
+            console.log (" specific message successfully.")
+        }).catch(()=>{
+            console.log ("Error while updating specific message.")
+        })
 
     }
     
